@@ -1,0 +1,14 @@
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: '%env(REDIS_URL)%/0'
+            logging: true
+        session:
+            type: predis
+            alias: session
+            dsn: '%env(REDIS_URL)%/1'
+            logging: true
+    session:
+        client: session

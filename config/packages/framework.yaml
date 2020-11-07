@@ -7,9 +7,13 @@ framework:
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:
-        handler_id: null
+        handler_id: snc_redis.session.handler
         cookie_secure: auto
         cookie_samesite: lax
+    cache:
+        app: cache.adapter.redis
+        # app cache from client config as default adapter/provider
+        default_redis_provider: snc_redis.default
 
     #esi: true
     #fragments: true
