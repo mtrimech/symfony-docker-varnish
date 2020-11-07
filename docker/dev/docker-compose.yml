@@ -6,7 +6,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ../mysql:/var/lib/mysql
+      - ../../mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
@@ -26,7 +26,7 @@ services:
       retries: 3
       start_period: 30s
     build:
-      context: ./.
+      context: ../.
       dockerfile: Dockerfile
       target: php_fpm
     volumes:
@@ -44,7 +44,7 @@ services:
 
   varnish: # Reverse proxy clients-server
     build:
-      context: ./.
+      context: ../.
       dockerfile: Dockerfile
       target: varnish
     networks:
