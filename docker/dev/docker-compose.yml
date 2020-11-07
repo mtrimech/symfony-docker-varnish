@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  mysql: # Mysql container
+    image: mysql:5.7.31
+    ports:
+      - 3306:3306
+    volumes:
+      - ../../mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+
+  php: # Php container (With nginx and supervisor)
+    deploy:
+      resources: # Resources allocations for php container
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+      target: php_fpm
+    volumes:
+      - ../../:/var/www
+    links:
+      - mysql
+      - rabbitmq
+      - mailcatcher
+      - redis
+    tty: true
+    ports:
+      - "8080:80"
+    networks:
+      - localnetwork
+
+  varnish: # Reverse proxy clients-server
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+      target: varnish
+    networks:
+      - localnetwork
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    links:
+      - php
+    restart: unless-stopped
+
+  redis: # Redis (For cache)
+    image: redis:5.0
+
+  rabbitmq:
+    image: "rabbitmq:3.7-management"
+    environment:
+      RABBITMQ_DEFAULT_USER: "root"
+      RABBITMQ_DEFAULT_PASS: "root"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  mailcatcher:
+    image: tophfr/mailcatcher
+    ports:
+      - 1080:80
+
+networks:
+  localnetwork:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 162.11.1.0/24
+          gateway: 162.11.1.1
