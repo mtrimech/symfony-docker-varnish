@@ -68,6 +68,8 @@ All sent emails from your application are redirected to the Mailcatcher service
     docker-compose exec php bash
     mv .env-example .env
     composer install
+    php bin/console do:da:cr --if-not-exists
+    php bin/console do:sc:up --force
 
 ##### Setting up cache and log directories access
 
