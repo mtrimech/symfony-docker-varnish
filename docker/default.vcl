@@ -25,8 +25,8 @@ sub vcl_deliver {
 sub vcl_backend_response {
     if (beresp.status == 200) {
         unset beresp.http.Cache-Control;
-        set beresp.http.Cache-Control = "public; max-age=200";
-        set beresp.ttl = 200s;
+        set beresp.http.Cache-Control = "public; max-age=60";
+        set beresp.ttl = 60s;
     }
 
     set beresp.http.Served-By = beresp.backend.name;
@@ -44,6 +44,9 @@ sub vcl_backend_response {
         unset beresp.http.cookie;
         set beresp.storage_hint = "static";
         set beresp.http.x-storage = "static";
+        unset beresp.http.Cache-Control;
+        set beresp.http.Cache-Control = "public; max-age=2592000";
+        set beresp.ttl = 2592000s;
     } else {
         set beresp.storage_hint = "default";
         set beresp.http.x-storage = "default";
