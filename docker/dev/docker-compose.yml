@@ -30,7 +30,7 @@ services:
       dockerfile: Dockerfile
       target: php_fpm
     volumes:
-      - ../:/var/www
+      - ../../:/var/www
     links:
       - mysql
       - rabbitmq
