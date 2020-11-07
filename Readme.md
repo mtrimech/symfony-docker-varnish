@@ -62,7 +62,18 @@ All sent emails from your application are redirected to the Mailcatcher service
     echo RABBIT_MQ_USER_PASSWORD=your_awesom_password > docker/prod/.env
 
     docker-compose up -d
-    
+
+# Composer install & Prepare project
+
+    docker-compose exec php bash
+    mv .env-example .env
+    composer install
+
+##### Setting up cache and log directories access
+
+    mkdir -p var/cache var/log
+    chmod -R 777 var/cache var/log
+
 # Networks
 
 All containers are running on the same network 162.11.1.0
