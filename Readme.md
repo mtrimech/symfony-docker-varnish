@@ -42,9 +42,25 @@ If you got a 503 varnish error, please check this configuration
     
 This project is already configured with redis, take a look at config/packages/sync_redis.yaml and config/packages/framework.yaml
 
-###The .env file
+# Mailcatcher (Only for dev)
+
+Open the browser on port 1080
+
+All sent emails from your application are redirected to the Mailcatcher service
+
+#Development
 
     echo REDIS_URL=redis://redis > .env
+    echo MAILER_DSN=smtp://mailcatcher > .env
+
+#Production
+
+    echo REDIS_URL=redis://redis > docker/prod/.env
+    echo MYSQL_ROOT_USER=your_awesom_username > docker/prod/.env
+    echo MYSQL_ROOT_PASSWORD=your_awesom_password > docker/prod/.env
+    echo RABBIT_MQ_USER_NAME=your_awesom_username > docker/prod/.env
+    echo RABBIT_MQ_USER_PASSWORD=your_awesom_password > docker/prod/.env
 
 
+    docker-compose up -d
 # !Enjoy
