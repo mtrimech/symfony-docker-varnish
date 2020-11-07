@@ -10,6 +10,9 @@ services:
     environment:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
+    networks:
+      localnetwork:
+        ipv4_address: 162.11.1.101
 
   php: # Php container (With nginx and supervisor)
     deploy:
@@ -40,7 +43,8 @@ services:
     ports:
       - "8080:80"
     networks:
-      - localnetwork
+      localnetwork:
+        ipv4_address: 162.11.1.102
 
   varnish: # Reverse proxy clients-server
     build:
@@ -48,7 +52,8 @@ services:
       dockerfile: Dockerfile
       target: varnish
     networks:
-      - localnetwork
+      localnetwork:
+        ipv4_address: 162.11.1.103
     ports:
       - "80:80"
     depends_on:
@@ -59,6 +64,9 @@ services:
 
   redis: # Redis (For cache)
     image: redis:5.0
+    networks:
+      localnetwork:
+        ipv4_address: 162.11.1.104
 
   rabbitmq:
     image: "rabbitmq:3.7-management"
@@ -69,11 +77,17 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+    networks:
+      localnetwork:
+        ipv4_address: 162.11.1.105
 
   mailcatcher:
     image: tophfr/mailcatcher
     ports:
       - 1080:80
+    networks:
+      localnetwork:
+        ipv4_address: 162.11.1.106
 
 networks:
   localnetwork:
