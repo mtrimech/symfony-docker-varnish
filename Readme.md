@@ -82,7 +82,7 @@ All containers are running on the same network 162.11.1.0
 
 * MySQL 162.11.1.101
 * Php 162.11.1.102
-* Varnish 162.11.1.103
+* Varnish 162.11.1.103 (only available on prod environment)
 * Redis 162.11.1.104
 * Rabbitmq 162.11.1.105
 * Mailcatcher 162.11.1.106 (This is not available on dev environment)

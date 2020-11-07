@@ -41,26 +41,10 @@ services:
       - redis
     tty: true
     ports:
-      - "8080:80"
+      - "80:80"
     networks:
       localnetwork:
         ipv4_address: 162.11.1.102
-
-  varnish: # Reverse proxy clients-server
-    build:
-      context: ../.
-      dockerfile: Dockerfile
-      target: varnish
-    networks:
-      localnetwork:
-        ipv4_address: 162.11.1.103
-    ports:
-      - "80:80"
-    depends_on:
-      - php
-    links:
-      - php
-    restart: unless-stopped
 
   redis: # Redis (For cache)
     image: redis:5.0
