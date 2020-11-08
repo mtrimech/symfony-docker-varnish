@@ -17,7 +17,7 @@ You have just to clone this repository on your virtual machine
 
     git clone https://github.com/mtrimech/symfony-docker-varnish my_project
     
-# Run
+# Build and run containers
     
 #### DEV
     
@@ -29,11 +29,7 @@ You have just to clone this repository on your virtual machine
     cd my_project/docker/prod
     docker-compose up -d 
     
-Then open your browser and navigate to http://localhost
-
-#### Note : 
-* The nginx service is running under 8080 port, because the 80 port is reserved for the reverse proxy server(Varnish)
-* Nginx is installed under php container, and it's running with supervisor # see the configuration file under docker/config/supervisor
+Run the command "docker ps" to display all running containers
 
 # Varnish
 The varnish container is used as reverse proxy, coming with default configuration file (docker/default.vcl)
@@ -72,6 +68,7 @@ All sent emails from your application are redirected to the Mailcatcher service
 
 # Composer install & Prepare project
 
+    cd docker/dev # or cd docker/prod
     docker-compose exec php bash
     mv .env-example .env
     composer install
@@ -82,6 +79,13 @@ All sent emails from your application are redirected to the Mailcatcher service
 
     mkdir -p var/cache var/log
     chmod -R 777 var/cache var/log
+
+
+Then open your browser and navigate to http://localhost
+
+#### Note : 
+* The nginx service is running under 8080 port, because the 80 port is reserved for the reverse proxy server(Varnish)
+* Nginx is installed under php container, and it's running with supervisor # see the configuration file under docker/config/supervisor
 
 # Networks
 
