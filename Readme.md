@@ -19,9 +19,16 @@ You have just to clone this repository on your virtual machine
     
 # Run
     
-    cd my_project/docker
+#### DEV
+    
+    cd my_project/docker/dev
     docker-compose up -d 
 
+#### PROD
+    
+    cd my_project/docker/prod
+    docker-compose up -d 
+    
 Then open your browser and navigate to http://localhost
 
 #### Note : 
