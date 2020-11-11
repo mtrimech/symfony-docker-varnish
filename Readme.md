@@ -37,7 +37,7 @@ The varnish container is used as reverse proxy, coming with default configuratio
 If you got a 503 varnish error, please check this configuration
 
     backend default {
-        .host = "162.11.1.2"; # This ip address of the php container
+        .host = "162.11.1.102"; # This ip address of the php container
         .port = "80";
     } 
     
